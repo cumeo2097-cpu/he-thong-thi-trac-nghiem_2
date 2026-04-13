@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác Thực Truy Cập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 320px; }
+        input { padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; box-sizing: border-box; text-align: center; }
+        button { background: #0056b3; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        #msg { color: #d9534f; margin-top: 15px; font-size: 14px; min-height: 20px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2 style="color:#0056b3">NHẬP MÃ ĐỂ VÀO</h2>
+        <input type="text" id="code" placeholder="Nhập mã 1 lần...">
+        <button onclick="check()">VÀO THI</button>
+        <p id="msg"></p>
+    </div>
+
+    <script>
+        // DÁN CÁI LINK WEB APP URL BẠN COPY Ở BƯỚC 2 VÀO ĐÂY
+        const API_URL = "https://script.google.com/macros/s/AKfycbw3hd0TQ3141b_gEpde5CfVxR6Hk1a5kqK3-gPxTiB1engmtRDq_25zSKpkvaRPXHgr/exec";
+
+        async function check() {
+            const code = document.getElementById('code').value.trim();
+            const msg = document.getElementById('msg');
+            if(!code) return msg.innerText = "Hãy nhập mã!";
+            
+            msg.style.color = "blue";
+            msg.innerText = "Đang kiểm tra...";
+
+            try {
+                const response = await fetch(`${API_URL}?code=${code}`);
+                const data = await response.json();
+
+                if(data.status === "success") {
+                    sessionStorage.setItem("quiz_access", "granted");
+                    window.location.href = "index.html"; // Chuyển vào menu chính
+                } else {
+                    msg.style.color = "red";
+                    msg.innerText = data.message;
+                }
+            } catch (e) {
+                msg.innerText = "Lỗi kết nối!";
+            }
+        }
+    </script>
+</body>
+</html>
