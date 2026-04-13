@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <script>
+    if (sessionStorage.getItem("quiz_access") !== "granted") {
+        window.location.href = "login.html";
+    }
+</script>
     <meta charset="UTF-8">
     <title>Hệ Thống Ôn Tập Trắc Nghiệm</title>
     <style>
