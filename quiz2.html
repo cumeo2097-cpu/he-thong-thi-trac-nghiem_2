@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"><title>Quiz 2 - Ôn Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; background: #fff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .q-title { font-size: 18px; font-weight: bold; color: #0056b3; margin: 25px 0 10px 0; }
+        label { display: block; padding: 12px; background: #f8f9fa; margin-bottom: 8px; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; transition: 0.2s; }
+        label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        #result { font-size: 26px; font-weight: bold; text-align: center; margin-top: 20px; color: #0056b3; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #6c757d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center; color: #333; border-bottom: 2px solid #28a745; padding-bottom: 10px;">ÔN TẬP QUIZ 2</h2>
+        <div id="quiz-content"></div>
+        <button class="submit-btn" onclick="chamDiem()">NỘP BÀI & XEM ĐÁP ÁN</button>
+        <div id="result"></div>
+        <a href="index.html" class="back-link">← Quay lại Menu</a>
+    </div>
+
+    <script>
+        const quizData = [
+            {q: "Câu 1: Nhận định sau đúng hay sai: Tư tưởng Hồ Chí Minh là bộ phận nền tảng tư tưởng, kim chỉ nam cho hành động của Đảng.", o: ["A. Đúng", "B. Sai"], a: 0},
+            {q: "Câu 2: Chọn cụm từ thích hợp: \"Văn hóa… cho quốc dân đi.\"", o: ["A. Soi lối.", "B. Dẫn lối.", "C. Soi đường.", "D. Mở đường."], a: 2},
+            {q: "Câu 3: Tư tưởng HCM có vị trí như thế nào trong hệ thống tư tưởng của Đảng?", o: ["A. Là một bộ phận trong hệ thống.", "B. Là bộ phận nền tảng tư tưởng, kim chỉ nam cho hành động của Đảng.", "C. Là bộ phận quan trọng.", "D. Là bộ phận rất quan trọng."], a: 1},
+            {q: "Câu 4: Theo HCM, ưu điểm lớn nhất của chủ nghĩa Mác-Lênin là gì?", o: ["A. Phương pháp làm việc biện chứng.", "B. Bản chất khoa học.", "C. Bản chất cách mạng.", "D. Chủ nghĩa nhân đạo chiến đấu."], a: 0},
+            {q: "Câu 5: Sau khi tìm đường cứu nước, lần đầu tiên Bác Hồ về nước vào thời gian nào?", o: ["A. 1945", "B. 1931", "C. 1930", "D. 1941"], a: 3},
+            {q: "Câu 6: Câu: \"…Chủ trương làm tư sản dân quyền cách mạng...\" được trích từ \"Chính cương vắn tắt của Đảng\" đúng hay sai?", o: ["A. Sai", "B. Đúng"], a: 1},
+            {q: "Câu 7: Tư tưởng HCM… cho cuộc đấu tranh của nhân dân ta giành thắng lợi, là …to lớn của Đảng và của dân tộc ta.", o: ["A. mở đường/ tài sản tinh thần.", "B. chỉ đường/ tài sản tinh thần.", "C. soi đường/ tài sản tinh thần.", "D. dẫn đường/ tài sản tinh thần."], a: 2},
+            {q: "Câu 8: Theo HCM, “căn bệnh” nào là “căn bệnh mẹ đẻ ra hàng trăm thứ căn bệnh con nguy hiểm khác”?", o: ["A. Lãng phí .", "B. Quan liêu.", "C. Tham ô.", "D. Chủ nghĩa cá nhân."], a: 3},
+            {q: "Câu 9: \"Tất cả các dân tộc trên thế giới đều sinh ra bình đẳng...\". Câu trên trích từ văn kiện nào?", o: ["A. Lời kêu gọi toàn quốc kháng chiến.", "B. Bản án chế độ thực dân Pháp.", "C. Tuyên ngôn độc lập.", "D. Đường Kách mệnh."], a: 2},
+            {q: "Câu 10: Bản “Yêu sách của nhân dân Việt Nam” gửi tới Hội Nghị Versailles gồm mấy điểm?", o: ["A. 3 điểm.", "B. 6 điểm.", "C. 9 điểm.", "D. 8 điểm."], a: 3},
+            {q: "Câu 11: Câu \"…Chủ trương làm tư sản dân quyền cách mạng...\" được trích từ bài viết nào?", o: ["A. Đường Kách mệnh.", "B. Cương lĩnh chính trị.", "C. Chương trình của Đảng.", "D. Chính cương vắn tắt của Đảng."], a: 3},
+            {q: "Câu 12: Theo HCM, để phát huy sức mạnh cá nhân người lao động, cần phải:", o: ["A. Tác động vào nguyện vọng.", "B. Tác động vào sở thích.", "C. Tác động vào nhu cầu và lợi ích thiết thân.", "D. Tác động vào động lực chính trị."], a: 2},
+            {q: "Câu 13: Điền vào chỗ trống: \"Làm cách mệnh rồi thì quyền trao cho... chớ để trong tay một bọn ít người\".", o: ["A. dân chúng số nhiều.", "B. giai cấp nông dân.", "C. giai cấp tư sản dân tộc.", "D. giai cấp công nhân."], a: 0},
+            {q: "Câu 14: Điền vào chỗ trống: \"Quan san muôn dặm một nhà… đều là anh em.\"", o: ["A. vàng đen trắng đỏ.", "B. bốn phương vô sản.", "C. tứ hải.", "D. lao động thế giới."], a: 1},
+            {q: "Câu 15: \"Ỷ Pháp cầu tiến bộ chẳng khác nào xin giặc rủ lòng thương\" là nói về Phan Chu Trinh. Đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+        ];
+        
+
+        function render() {
+            let html = '';
+            quizData.forEach((q, i) => {
+                html += `<div><div class="q-title">${q.q}</div>`;
+                q.o.forEach((opt, j) => {
+                    html += `<label id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+
+        function chamDiem() {
+            let score = 0;
+            quizData.forEach((q, i) => {
+                let options = document.getElementsByName(`q${i}`);
+                let correctIdx = q.a;
+                q.o.forEach((_, j) => document.getElementById(`l-${i}-${j}`).className = '');
+                document.getElementById(`l-${i}-${correctIdx}`).classList.add('correct');
+                let checked = Array.from(options).find(r => r.checked);
+                if (checked) {
+                    let userIdx = parseInt(checked.value);
+                    if (userIdx === correctIdx) score++;
+                    else document.getElementById(`l-${i}-${userIdx}`).classList.add('wrong');
+                }
+            });
+            document.getElementById('result').innerText = `KẾT QUẢ: ${score} / 15 CÂU ĐÚNG`;
+            window.scrollTo(0, 0);
+        }
+        render();
+    </script>
+</body>
+</html>

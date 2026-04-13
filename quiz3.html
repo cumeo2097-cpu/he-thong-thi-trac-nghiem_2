@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"><title>Quiz 3 - Ôn Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; background: #fff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .q-title { font-size: 18px; font-weight: bold; color: #0056b3; margin: 25px 0 10px 0; }
+        label { display: block; padding: 12px; background: #f8f9fa; margin-bottom: 8px; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; transition: 0.2s; }
+        label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        #result { font-size: 26px; font-weight: bold; text-align: center; margin-top: 20px; color: #0056b3; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #6c757d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center; color: #333; border-bottom: 2px solid #28a745; padding-bottom: 10px;">ÔN TẬP QUIZ 3</h2>
+        <div id="quiz-content"></div>
+        <button class="submit-btn" onclick="chamDiem()">NỘP BÀI & XEM ĐÁP ÁN</button>
+        <div id="result"></div>
+        <a href="index.html" class="back-link">← Quay lại Menu</a>
+    </div>
+
+    <script>
+        const quizData = [
+            {q: "Câu 1: Hiệp ước nào đánh dấu sự đầu hàng hoàn toàn của triều đình nhà Nguyễn?", o: ["A. Pa-tơ-nốt", "B. Giáp Tuất", "C. Hắc-măng", "D. Nhâm Tuất"], a: 0},
+            {q: "Câu 2: Sự thất bại của phong trào nào chứng tỏ độc lập dân tộc không gắn liền với phong kiến?", o: ["A. Đấu tranh thiểu số", "B. Khởi nghĩa Thái Nguyên", "C. Phong trào Cần Vương", "D. Nông dân Yên Thế"], a: 2},
+            {q: "Câu 3: Bài giảng của Nguyễn Ái Quốc cho cán bộ tại Quảng Châu có tên là gì?", o: ["A. Yêu sách dân tộc", "B. Sơ thảo luận cương", "C. Đường Kách Mệnh", "D. Nhật ký trong tù"], a: 2},
+            {q: "Câu 4: Duyên cớ để liên quân Pháp- Tây Ban Nha xâm lược VN ngày 1-9-1858 là:", o: ["A. Chính sách cấm đạo, giết đạo của nhà Nguyễn", "B. Nhu cầu thị trường", "C. Triều đình từ chối quốc thư", "D. Không cho thương nhân châu Âu buôn bán"], a: 0},
+            {q: "Câu 5: Tổng Bí thư đầu tiên của Đảng Cộng sản Việt Nam là ai?", o: ["A. Nguyễn Ái Quốc", "B. Hoàng Quốc Việt", "C. Trần Phú", "D. Nguyễn Phong Sắc"], a: 2},
+            {q: "Câu 6: “Dù màu da có khác nhau, trên đời này chỉ có hai giống người: Bóc lột và bị bóc lột”. Nhận định của ai?", o: ["A. Phan Châu Trinh", "B. Trần Phú", "C. Phan Bội Châu", "D. Nguyễn Tất Thành"], a: 3},
+            {q: "Câu 7: Từ ngoại giao sai lầm của nhà Nguyễn, Việt Nam rút ra bài học gì hiện nay?", o: ["A. Đổi mới kinh tế gắn với mở cửa, hợp tác phát triển.", "B. Cải cách toàn diện.", "C. Tự do tôn giáo.", "D. Tự do tín ngưỡng."], a: 0},
+            {q: "Câu 8: Cương lĩnh đầu tiên chủ trương thực hiện cách mạng xã hội chủ nghĩa đúng hay sai?", o: ["A. Sai", "B. Đúng"], a: 0},
+            {q: "Câu 9: Hội Nghị thành lập Đảng diễn ra tại đâu?", o: ["A. Nghệ An", "B. Hương Cảng - Trung Quốc", "C. Hà Nội", "D. Cao Bằng"], a: 1},
+            {q: "Câu 10: Cách mạng tháng Tám 1945 là kết quả của bao nhiêu năm đấu tranh?", o: ["A. 20 năm", "B. 5 năm", "C. 15 năm", "D. 10 năm"], a: 2},
+            {q: "Câu 11: Kẻ thù chính giai đoạn 1858 - 1954 không phải là Pháp đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 1},
+            {q: "Câu 12: Nguyễn Tất Thành tìm đường cứu nước khi tư bản đang:", o: ["A. Còn non trẻ", "B. Đoàn kết", "C. Trở thành chủ nghĩa đế quốc", "D. Vừa lật đổ phong kiến"], a: 2},
+            {q: "Câu 13: Hiệp định Giơ-ne-ve chấm dứt quân Pháp tại Đông Dương ký năm nào?", o: ["A. 1975", "B. 1945", "C. 1954", "D. 1946"], a: 2},
+            {q: "Câu 14: Sự kiện nào xóa bỏ nô lệ hơn 80 năm và phong kiến hàng nghìn năm?", o: ["A. Phong trào 39-41", "B. Phong trào 30-31", "C. Cách mạng Tháng Tám 1945", "D. Phong trào 36-39"], a: 2},
+            {q: "Câu 15: Chánh cương, sách lược, chương trình tóm tắt thông qua tại hội nghị nào?", o: ["A. Hội nghị Diên Hồng", "B. Hội nghị Giơ-ne-vơ", "C. Hội nghị hợp nhất các tổ chức cộng sản", "D. Hội nghị Ianta"], a: 2}
+        ];
+
+        function render() {
+            let html = '';
+            quizData.forEach((q, i) => {
+                html += `<div><div class="q-title">${q.q}</div>`;
+                q.o.forEach((opt, j) => {
+                    html += `<label id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+
+        function chamDiem() {
+            let score = 0;
+            quizData.forEach((q, i) => {
+                let options = document.getElementsByName(`q${i}`);
+                let correctIdx = q.a;
+                q.o.forEach((_, j) => document.getElementById(`l-${i}-${j}`).className = '');
+                document.getElementById(`l-${i}-${correctIdx}`).classList.add('correct');
+                let checked = Array.from(options).find(r => r.checked);
+                if (checked) {
+                    let userIdx = parseInt(checked.value);
+                    if (userIdx === correctIdx) score++;
+                    else document.getElementById(`l-${i}-${userIdx}`).classList.add('wrong');
+                }
+            });
+            document.getElementById('result').innerText = `KẾT QUẢ: ${score} / 15 CÂU ĐÚNG`;
+            window.scrollTo(0, 0);
+        }
+        render();
+    </script>
+</body>
+</html>

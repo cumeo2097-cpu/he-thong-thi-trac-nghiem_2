@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"><title>Quiz 4 - Ôn Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; background: #fff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .q-title { font-size: 18px; font-weight: bold; color: #0056b3; margin: 25px 0 10px 0; }
+        label { display: block; padding: 12px; background: #f8f9fa; margin-bottom: 8px; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; transition: 0.2s; }
+        label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        #result { font-size: 26px; font-weight: bold; text-align: center; margin-top: 20px; color: #0056b3; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #6c757d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center; color: #333; border-bottom: 2px solid #28a745; padding-bottom: 10px;">ÔN TẬP QUIZ 4</h2>
+        <div id="quiz-content"></div>
+        <button class="submit-btn" onclick="chamDiem()">NỘP BÀI & XEM ĐÁP ÁN</button>
+        <div id="result"></div>
+        <a href="index.html" class="back-link">← Quay lại Menu</a>
+    </div>
+
+    <script>
+        const quizData = [
+            {q: "Câu 1: Dân chủ XHCN là ….của chế độ ta, vừa là mục tiêu, vừa là động lực phát triển.", o: ["A. Trọng tâm", "B. Đường lối", "C. Bản chất", "D. Nền tảng"], a: 2},
+            {q: "Câu 2: Tăng cường quốc phòng, giữ vững an ninh là nhiệm vụ…. của Đảng và toàn dân.", o: ["A. Trọng yếu, thường xuyên", "B. Quan trọng, then chốt", "C. Thường xuyên, liên tục", "D. Trọng yếu, then chốt"], a: 0},
+            {q: "Câu 3: Xây dựng con người VN yêu nước, làm chủ, có tri thức, văn hóa... đúng hay sai?", o: ["A. Sai", "B. Đúng"], a: 1},
+            {q: "Câu 4: Đâu là định nghĩa đúng và đầy đủ về dân chủ?", o: ["A. Giá trị phản ánh quyền cơ bản.", "B. Thái tổ chức nhà nước.", "C. Giá trị phản ánh quyền cơ bản; phạm trù chính trị gắn với nhà nước; phạm trù lịch sử.", "D. Giá trị xã hội phản ánh đấu tranh."], a: 2},
+            {q: "Câu 5: Đối ngoại độc lập, tự chủ... là một trong 8 đặc trưng xây dựng CNXH ở VN đúng hay sai?", o: ["A. Sai", "B. Đúng"], a: 1},
+            {q: "Câu 6: Nhà nước pháp quyền xã hội chủ nghĩa là nhà nước?", o: ["A. Tự do, công bằng", "B. Do nhân dân lập nên", "C. Của dân, do dân, vì dân", "D. VN dân chủ cộng hòa"], a: 2},
+            {q: "Câu 7: ….. là trung tâm của chiến lược phát triển, đồng thời là chủ thể phát triển.", o: ["A. Chủ nghĩa xã hội", "B. Kinh tế thị trường", "C. Nhà nước pháp quyền", "D. Con người"], a: 3},
+            {q: "Câu 8: Đoàn kết các dân tộc có vị trí…..., lâu dài, là nhân tố quyết định thắng lợi.", o: ["A. Quan trọng", "B. Ưu tiên", "C. Chiến lược cơ bản", "D. Then chốt"], a: 2},
+            {q: "Câu 9: Đâu là bản chất kinh tế của nền dân chủ XHCN?", o: ["A. Nhiều thành phần", "B. Quyền lực thuộc nhân dân", "C. Tư hữu chủ đạo", "D. Chế độ sở hữu về tư liệu sản xuất chủ yếu của toàn xã hội"], a: 3},
+            {q: "Câu 10: Đặc điểm kinh tế của thời kỳ quá độ lên CNXH là gì?", o: ["A. Kinh tế nhiều thành phần trong đó có thành phần đối lập", "B. Kinh tế thị trường", "C. Kinh tế kế hoạch", "D. Nông dân gia trưởng"], a: 0},
+            {q: "Câu 11: Khối đại đoàn kết toàn dân tộc dựa trên nền tảng liên minh nào?", o: ["A. Công nhân và trí thức", "B. Công nhân, nông dân và trí thức", "C. Các dân tộc", "D. Công nhân và nông dân"], a: 1},
+            {q: "Câu 12: Để lãnh đạo, Đảng phải vững mạnh, tự đổi mới, nâng cao bản lĩnh... đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+            {q: "Câu 13: Quan niệm đúng về nhà nước XHCN là nhà nước mà sự thống trị thuộc về giai cấp công nhân... đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+            {q: "Câu 14: Con người là trung tâm của chiến lược phát triển đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+            {q: "Câu 15: Đặc trưng cơ bản CNXH: Có nền kinh tế phát triển cao và chế độ công hữu tư liệu sản xuất đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+        ];
+        function render() {
+            let html = '';
+            quizData.forEach((q, i) => {
+                html += `<div><div class="q-title">${q.q}</div>`;
+                q.o.forEach((opt, j) => {
+                    html += `<label id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+
+        function chamDiem() {
+            let score = 0;
+            quizData.forEach((q, i) => {
+                let options = document.getElementsByName(`q${i}`);
+                let correctIdx = q.a;
+                q.o.forEach((_, j) => document.getElementById(`l-${i}-${j}`).className = '');
+                document.getElementById(`l-${i}-${correctIdx}`).classList.add('correct');
+                let checked = Array.from(options).find(r => r.checked);
+                if (checked) {
+                    let userIdx = parseInt(checked.value);
+                    if (userIdx === correctIdx) score++;
+                    else document.getElementById(`l-${i}-${userIdx}`).classList.add('wrong');
+                }
+            });
+            document.getElementById('result').innerText = `KẾT QUẢ: ${score} / 15 CÂU ĐÚNG`;
+            window.scrollTo(0, 0);
+        }
+        render();
+    </script>
+</body>
+</html>

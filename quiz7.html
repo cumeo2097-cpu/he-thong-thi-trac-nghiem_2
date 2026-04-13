@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"><title>Quiz 1 - Ôn Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; background: #fff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .q-title { font-size: 18px; font-weight: bold; color: #0056b3; margin: 25px 0 10px 0; }
+        label { display: block; padding: 12px; background: #f8f9fa; margin-bottom: 8px; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; transition: 0.2s; }
+        label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        #result { font-size: 26px; font-weight: bold; text-align: center; margin-top: 20px; color: #0056b3; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #6c757d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center; color: #333; border-bottom: 2px solid #28a745; padding-bottom: 10px;">ÔN TẬP QUIZ 7</h2>
+        <div id="quiz-content"></div>
+        <button class="submit-btn" onclick="chamDiem()">NỘP BÀI & XEM ĐÁP ÁN</button>
+        <div id="result"></div>
+        <a href="index.html" class="back-link">← Quay lại Menu</a>
+    </div>
+
+    <script>
+        const quizData = [
+    {q: "Câu 1: Hiến pháp 2013 xác định Nhà nước ta có 5 đặc trưng đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 2: Nhà nước pháp quyền XHCN Việt Nam có 6 đặc trưng đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 3: Thấy tham nhũng thì phải tố cáo đến cơ quan có thẩm quyền đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 4: Nhà nước là công cụ chủ yếu để nhân dân thực hiện quyền làm chủ đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 5: Nhà nước ta là Nhà nước pháp quyền XHCN của nhân dân, do nhân dân, vì nhân dân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 6: Đường lối đối ngoại độc lập, tự chủ, đa phương hóa là quan điểm đối ngoại đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 7: Pháp luật là công cụ hữu hiệu nhất để quản lý xã hội đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 8: Đặc điểm Nhà nước pháp quyền là hoạt động theo Hiến pháp và pháp luật đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 9: Mặt trận Tổ quốc có vai trò phản biện xã hội đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 10: Xây dựng Nhà nước pháp quyền là trách nhiệm của mọi công dân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 11: Chức năng Nhà nước là đảm bảo an ninh trật tự và an toàn xã hội đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 12: Tất cả quyền lực Nhà nước thuộc về Nhân dân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 13: Thuật ngữ “Nhà nước pháp quyền” được nêu tại HNTW 2 khóa VII (1991) đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 14: Tính nhân dân thể hiện ở việc Nhà nước phục vụ lợi ích của dân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 15: Nhà nước ta mang bản chất giai cấp công nhân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+];
+
+        function render() {
+            let html = '';
+            quizData.forEach((q, i) => {
+                html += `<div><div class="q-title">${q.q}</div>`;
+                q.o.forEach((opt, j) => {
+                    html += `<label id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+
+        function chamDiem() {
+            let score = 0;
+            quizData.forEach((q, i) => {
+                let options = document.getElementsByName(`q${i}`);
+                let correctIdx = q.a;
+                q.o.forEach((_, j) => document.getElementById(`l-${i}-${j}`).className = '');
+                document.getElementById(`l-${i}-${correctIdx}`).classList.add('correct');
+                let checked = Array.from(options).find(r => r.checked);
+                if (checked) {
+                    let userIdx = parseInt(checked.value);
+                    if (userIdx === correctIdx) score++;
+                    else document.getElementById(`l-${i}-${userIdx}`).classList.add('wrong');
+                }
+            });
+            document.getElementById('result').innerText = `KẾT QUẢ: ${score} / 15 CÂU ĐÚNG`;
+            window.scrollTo(0, 0);
+        }
+        render();
+    </script>
+</body>
+</html>

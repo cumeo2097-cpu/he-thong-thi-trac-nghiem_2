@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"><title>Quiz 1 - Ôn Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; background: #fff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .q-title { font-size: 18px; font-weight: bold; color: #0056b3; margin: 25px 0 10px 0; }
+        label { display: block; padding: 12px; background: #f8f9fa; margin-bottom: 8px; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; transition: 0.2s; }
+        label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        #result { font-size: 26px; font-weight: bold; text-align: center; margin-top: 20px; color: #0056b3; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #6c757d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center; color: #333; border-bottom: 2px solid #28a745; padding-bottom: 10px;">ÔN TẬP QUIZ 1</h2>
+        <div id="quiz-content"></div>
+        <button class="submit-btn" onclick="chamDiem()">NỘP BÀI & XEM ĐÁP ÁN</button>
+        <div id="result"></div>
+        <a href="index.html" class="back-link">← Quay lại Menu</a>
+    </div>
+
+    <script>
+        const quizData = [
+            {q: "Câu 1: Điều kiện để sức lao động trở thành hàng hoá là gì?", o: ["A. Người lao động phải được tự do; người lao động không có tư liệu sản xuất.", "B. Người lao động không được tự do và không có tư liệu sản xuất.", "C. Người lao động phải được tự do và không có tư liệu tiêu dùng.", "D. Người lao động phải được tự do; người lao động có tư liệu sản xuất."], a: 0},
+            {q: "Câu 2: Cung và cầu có phải hai mặt đối lập tạo thành mâu thuẫn biện chứng của thị trường không? Tại sao?", o: ["A. Đúng. Nhưng không là điều kiện tồn tại của nhau.", "B. Sai. Vì nó không là điều kiện tồn tại của nhau.", "C. Sai. Vì cung và cầu vừa có xu hướng đối lập nhau, vừa là điều kiện tồn tại của nhau.", "D. Đúng. Vì cung và cầu vừa có xu hướng đối lập nhau, vừa là điều kiện tồn tại của nhau."], a: 3},
+            {q: "Câu 3: Khi xuất hiện mâu thuẫn gay gắt giữa lực lượng sản xuất và quan hệ sản xuất thì:", o: ["A. Lực lượng sản xuất phải tự điều chỉnh cho phù hợp với quan hệ sản xuất.", "B. Quan hệ sản xuất được thay đổi thông qua những cuộc cải cách và các cuộc cách mạng xã hội.", "C. Quan hệ sản xuất không thể thay đổi được...", "D. Quan hệ sản xuất sẽ tự động thay đổi..."], a: 1},
+            {q: "Câu 4: Tâm lý, tính cách tiểu nông của người Việt Nam truyền thống căn bản là do:", o: ["A. Bản tính cố hữu của người Việt.", "B. Phương thức sản xuất tiểu nông, lạc hậu tồn tại lâu dài trong lịch sử.", "C. Điều kiện tổ chức dân cư khép kín của các làng, xã.", "D. Bị phong kiến, đế quốc nhiều thế kỷ áp bức"], a: 1},
+            {q: "Câu 5: Phát kiến vĩ đại nhất của C.Mác trên lĩnh vực nghiên cứu triết học và kinh tế chính trị là:", o: ["A. Sáng tạo ra chủ nghĩa duy vật biện chứng và học thuyết giá trị lao động.", "B. Sáng tạo ra phép biện chứng duy vật và học thuyết giá trị thặng dư.", "C. Sáng tạo ra chủ nghĩa duy vật và học thuyết giá trị thặng dư.", "D. Sáng tạo ra chủ nghĩa duy vật lịch sử và học thuyết giá trị thặng dư."], a: 3},
+            {q: "Câu 6: Nhận định sau đây đúng hay sai: Quan điểm toàn diện đối lập với quan điểm lịch sử cụ thể.", o: ["A. Đúng", "B. Sai"], a: 1},
+            {q: "Câu 7: Yếu tố nào giữ vai trò quyết định đối với tính cách mạng triệt để nhất của giai cấp công nhân?", o: ["A. B bị áp bức nặng nề nhất.", "B. Bị bóc lột nặng nề nhất trong chủ nghĩa tư bản.", "C. Đại diện cho xã hội tương lai.", "D. Nghèo khổ nhất trong chủ nghĩa tư bản."], a: 2},
+            {q: "Câu 8: Nhân tố cơ bản, trực tiếp tạo thành nguồn gốc xã hội của ý thức là lao động và ngôn ngữ.", o: ["A. Đúng", "B. Sai"], a: 0},
+            {q: "Câu 9: Cái gì trực tiếp làm thay đổi chất của sự vật?", o: ["A. Không có đáp án nào đúng.", "B. Sự tăng lên hay giảm đi về số lượng...", "C. Sự tăng lên về quy mô tồn tại của sự vật.", "D. Sự biến đổi cấu trúc của sự vật."], a: 3},
+            {q: "Câu 10: Sự thống nhất giữa lực lượng sản xuất ở một trình độ nhất định và quan hệ sản xuất tương ứng tạo thành:", o: ["A. Hình thái KT-XH", "B. Cơ sở hạ tầng.", "C. Phương thức sản xuất.", "D. Kiến trúc thượng tầng."], a: 2},
+            {q: "Câu 11: Công thức chung của tư bản là?", o: ["A. H - T - H", "B. H - T - H'", "C. T - H - T'", "D. T - H - T"], a: 2},
+            {q: "Câu 12: Bài học lớn nhất trong Văn kiện Đại hội VI của Đảng là bài học nào?", o: ["A. Tôn trọng và hành động theo quy luật.", "B. Nâng cao sức chiến đấu của Đảng.", "C. Đảng phải quán triệt tư tưởng: Lấy dân làm gốc.", "D. Kết hợp sức mạnh dân tộc và thời đại."], a: 2},
+            {q: "Câu 13: \"Chủ nghĩa Mác đã mở đường cho việc nghiên cứu rộng rãi...\" Nhận định trên là của:", o: ["A. CacMác", "B. Ph-Ăngghen", "C. Hồ Chí Minh", "D. Lênin"], a: 3},
+            {q: "Câu 14: Nguồn gốc, động lực cơ bản của sự vận động, phát triển là do:", o: ["A. Sự thống nhất và đấu tranh giữa các mặt đối lập.", "B. Sự thống nhất và đấu tranh của các quy luật.", "C. Sự đấu tranh của các mặt đối lập và các quy luật.", "D. Sự thống nhất của các mặt đối lập."], a: 0},
+            {q: "Câu 15: Vì sao hàng hoá có hai thuộc tính là giá trị và giá trị sử dụng?", o: ["A. Vì lao động sản xuất hàng hoá có tính hai mặt: lao động cụ thể và trừu tượng.", "B. Vì lao động sản xuất có tính hai mặt: lao động giản đơn và phức tạp.", "C. Vì lao động có tính hai mặt: quá khứ và tương lai.", "D. Vì nhu cầu trao đổi hàng hoá."], a: 0}
+        ];
+
+        function render() {
+            let html = '';
+            quizData.forEach((q, i) => {
+                html += `<div><div class="q-title">${q.q}</div>`;
+                q.o.forEach((opt, j) => {
+                    html += `<label id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+
+        function chamDiem() {
+            let score = 0;
+            quizData.forEach((q, i) => {
+                let options = document.getElementsByName(`q${i}`);
+                let correctIdx = q.a;
+                q.o.forEach((_, j) => document.getElementById(`l-${i}-${j}`).className = '');
+                document.getElementById(`l-${i}-${correctIdx}`).classList.add('correct');
+                let checked = Array.from(options).find(r => r.checked);
+                if (checked) {
+                    let userIdx = parseInt(checked.value);
+                    if (userIdx === correctIdx) score++;
+                    else document.getElementById(`l-${i}-${userIdx}`).classList.add('wrong');
+                }
+            });
+            document.getElementById('result').innerText = `KẾT QUẢ: ${score} / 15 CÂU ĐÚNG`;
+            window.scrollTo(0, 0);
+        }
+        render();
+    </script>
+</body>
+</html>

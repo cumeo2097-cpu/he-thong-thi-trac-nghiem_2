@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"><title>Quiz 6 - Ôn Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; background: #fff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .q-title { font-size: 18px; font-weight: bold; color: #0056b3; margin: 25px 0 10px 0; }
+        label { display: block; padding: 12px; background: #f8f9fa; margin-bottom: 8px; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; transition: 0.2s; }
+        label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        #result { font-size: 26px; font-weight: bold; text-align: center; margin-top: 20px; color: #0056b3; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #6c757d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center; color: #333; border-bottom: 2px solid #28a745; padding-bottom: 10px;">ÔN TẬP QUIZ 6</h2>
+        <div id="quiz-content"></div>
+        <button class="submit-btn" onclick="chamDiem()">NỘP BÀI & XEM ĐÁP ÁN</button>
+        <div id="result"></div>
+        <a href="index.html" class="back-link">← Quay lại Menu</a>
+    </div>
+
+    <script>
+        const quizData = [
+    {q: "Câu 1: Toàn cầu hóa có tác động tiêu cực là gia tăng sự phân hóa giàu nghèo đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 2: Quốc phòng, an ninh là nhiệm vụ trọng yếu của ai?", o: ["A. Đảng, Nhà nước và toàn dân", "B. Nhà nước và toàn dân", "C. Mọi tầng lớp", "D. Cả hệ thống"], a: 0},
+    {q: "Câu 3: Lợi ích cao nhất của Tổ quốc trong đối ngoại là gì?", o: ["A. Giữ vững độc lập", "B. Giữ vững môi trường hòa bình, ổn định để phát triển kinh tế", "C. Đa phương hóa", "D. Hội nhập"], a: 1},
+    {q: "Câu 4: Việt Nam gia nhập APEC vào năm nào?", o: ["A. 1999", "B. 1998", "C. 2000", "D. 1997"], a: 1},
+    {q: "Câu 5: Chủ động hội nhập kinh tế quốc tế theo lộ trình phù hợp đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 6: Đối ngoại nhấn mạnh yêu cầu phát triển quan hệ hữu nghị với nước láng giềng nào?", o: ["A. Nga", "B. Lào, Campuchia, Trung Quốc", "C. Nhật Bản", "D. Thái Lan"], a: 1},
+    {q: "Câu 7: Đội ngũ cán bộ đối ngoại hiện nay chưa đáp ứng được nhu cầu đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 8: Chiến lược chống phá của các thế lực thù địch hiện nay là gì?", o: ["A. Bao vây", "B. Dùng vũ lực", "C. Chia rẽ", "D. Diễn biến hòa bình và bạo loạn lật đổ"], a: 3},
+    {q: "Câu 9: Cán bộ và nhân dân phải vững vàng về chính trị tư tưởng để bảo vệ an ninh đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 10: Quân đội nhân dân VN thành lập ngày nào?", o: ["A. 22/12/1944", "B. 19/12/1944", "C. 19/12/1946", "D. 22/12/1946"], a: 0},
+    {q: "Câu 11: Quan điểm của Đảng là xây dựng nền quốc phòng toàn dân và an ninh nhân dân vững mạnh đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 12: Yêu sách “Đường lưỡi bò” trái phép trên Biển Đông là của nước nào?", o: ["A. Trung Quốc", "B. Philippin", "C. Thái Lan", "D. Đài Loan"], a: 0},
+    {q: "Câu 13: Quốc phòng là công cuộc giữ nước bằng tổng thể các hoạt động quân sự, chính trị, kinh tế... đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 14: Thất bại mọi âm mưu chống phá là nhiệm vụ quốc phòng an ninh đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 15: Bảo vệ Đảng, Nhà nước, nhân dân và chế độ XHCN là nhiệm vụ bảo vệ Tổ quốc đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+];
+
+        function render() {
+            let html = '';
+            quizData.forEach((q, i) => {
+                html += `<div><div class="q-title">${q.q}</div>`;
+                q.o.forEach((opt, j) => {
+                    html += `<label id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+
+        function chamDiem() {
+            let score = 0;
+            quizData.forEach((q, i) => {
+                let options = document.getElementsByName(`q${i}`);
+                let correctIdx = q.a;
+                q.o.forEach((_, j) => document.getElementById(`l-${i}-${j}`).className = '');
+                document.getElementById(`l-${i}-${correctIdx}`).classList.add('correct');
+                let checked = Array.from(options).find(r => r.checked);
+                if (checked) {
+                    let userIdx = parseInt(checked.value);
+                    if (userIdx === correctIdx) score++;
+                    else document.getElementById(`l-${i}-${userIdx}`).classList.add('wrong');
+                }
+            });
+            document.getElementById('result').innerText = `KẾT QUẢ: ${score} / 15 CÂU ĐÚNG`;
+            window.scrollTo(0, 0);
+        }
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"><title>Quiz 1 - Ôn Tập</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; background: #fff; margin: auto; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .q-title { font-size: 18px; font-weight: bold; color: #0056b3; margin: 25px 0 10px 0; }
+        label { display: block; padding: 12px; background: #f8f9fa; margin-bottom: 8px; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; transition: 0.2s; }
+        label:hover { background: #e2e6ea; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        .submit-btn { background: #28a745; color: white; border: none; padding: 15px; width: 100%; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        #result { font-size: 26px; font-weight: bold; text-align: center; margin-top: 20px; color: #0056b3; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: #6c757d; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align:center; color: #333; border-bottom: 2px solid #28a745; padding-bottom: 10px;">ÔN TẬP QUIZ 12</h2>
+        <div id="quiz-content"></div>
+        <button class="submit-btn" onclick="chamDiem()">NỘP BÀI & XEM ĐÁP ÁN</button>
+        <div id="result"></div>
+        <a href="index.html" class="back-link">← Quay lại Menu</a>
+    </div>
+
+    <script>
+        const quizData = [
+    {q: "Câu 1: Đảng ra đời chấm dứt khủng hoảng về đường lối và giai cấp lãnh đạo đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 2: Cách mạng giải phóng dân tộc phải đi theo con đường vô sản đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 3: Sức mạnh bảo vệ Tổ quốc là khối đại đoàn kết toàn dân tộc đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 4: Tiền tệ có 5 chức năng đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 5: Nguyễn Ái Quốc gửi yêu sách tới Hội nghị Vécxây (1919) đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 6: Cổ vũ hủ tục là hành vi sai trái, không phải công dân tốt đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 7: Bí quyết thành công của Đảng là giữ vững bản chất giai cấp công nhân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 8: 5/6/1911 là ngày Nguyễn Tất Thành ra đi tìm đường cứu nước đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 9: Hồ Chí Minh dùng hình tượng 'Con đỉa hai vòi' để chỉ chủ nghĩa tư bản đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 10: Một dân tộc dốt là một dân tộc yếu đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 11: Trung với nước, hiếu với dân là đạo đức cơ bản người VN đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 12: Đoàn kết dân tộc thể hiện qua lễ hội và hợp tác kinh tế đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 13: Không tôn trọng quyền người khác là sai, công dân phải tôn trọng quyền của mọi người đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 14: Tự do ngôn luận là bày tỏ quan điểm đúng nơi, đúng lúc theo pháp luật đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 15: Hội nhập quốc tế giúp khai thác các nguồn lực bên ngoài đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+];
+
+        function render() {
+            let html = '';
+            quizData.forEach((q, i) => {
+                html += `<div><div class="q-title">${q.q}</div>`;
+                q.o.forEach((opt, j) => {
+                    html += `<label id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+            document.getElementById('quiz-content').innerHTML = html;
+        }
+
+        function chamDiem() {
+            let score = 0;
+            quizData.forEach((q, i) => {
+                let options = document.getElementsByName(`q${i}`);
+                let correctIdx = q.a;
+                q.o.forEach((_, j) => document.getElementById(`l-${i}-${j}`).className = '');
+                document.getElementById(`l-${i}-${correctIdx}`).classList.add('correct');
+                let checked = Array.from(options).find(r => r.checked);
+                if (checked) {
+                    let userIdx = parseInt(checked.value);
+                    if (userIdx === correctIdx) score++;
+                    else document.getElementById(`l-${i}-${userIdx}`).classList.add('wrong');
+                }
+            });
+            document.getElementById('result').innerText = `KẾT QUẢ: ${score} / 15 CÂU ĐÚNG`;
+            window.scrollTo(0, 0);
+        }
+        render();
+    </script>
+</body>
+</html>
