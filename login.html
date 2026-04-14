@@ -12,16 +12,23 @@
     </style>
 </head>
 <body>
+    <script>
+        // KIỂM TRA TỰ ĐỘNG: Nếu đã từng nhập mã thành công, vào thẳng menu
+        if (localStorage.getItem("quiz_access_token") === "active") {
+            window.location.href = "index.html";
+        }
+    </script>
+
     <div class="box">
-        <h2 style="color:#0056b3">NHẬP MÃ ĐỂ VÀO</h2>
-        <input type="text" id="code" placeholder="Nhập mã 1 lần...">
-        <button onclick="check()">VÀO THI</button>
+        <h2 style="color:#0056b3">HỆ THỐNG ÔN THI</h2>
+        <p style="font-size: 13px; color: #666;">Vui lòng nhập mã truy cập của bạn</p>
+        <input type="text" id="code" placeholder="Nhập mã 1 lần duy nhất...">
+        <button onclick="check()">KÍCH HOẠT & VÀO THI</button>
         <p id="msg"></p>
     </div>
 
     <script>
-        // DÁN CÁI LINK WEB APP URL BẠN COPY Ở BƯỚC 2 VÀO ĐÂY
-        const API_URL = "https://script.google.com/macros/s/AKfycbw3hd0TQ3141b_gEpde5CfVxR6Hk1a5kqK3-gPxTiB1engmtRDq_25zSKpkvaRPXHgr/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbw3hd0TQ3141b_gEpde5CfVxR6Hk1a5kqK3-gPxTiB1engmtRDq_25zSKpkvaRPXHgr/exec"
 
         async function check() {
             const code = document.getElementById('code').value.trim();
@@ -29,21 +36,22 @@
             if(!code) return msg.innerText = "Hãy nhập mã!";
             
             msg.style.color = "blue";
-            msg.innerText = "Đang kiểm tra...";
+            msg.innerText = "Đang xác thực...";
 
             try {
                 const response = await fetch(`${API_URL}?code=${code}`);
                 const data = await response.json();
 
                 if(data.status === "success") {
-                    sessionStorage.setItem("quiz_access", "granted");
-                    window.location.href = "index.html"; // Chuyển vào menu chính
+                    // GHI NHỚ VĨNH VIỄN TRÊN MÁY TÍNH NÀY
+                    localStorage.setItem("quiz_access_token", "active");
+                    window.location.href = "index.html";
                 } else {
                     msg.style.color = "red";
                     msg.innerText = data.message;
                 }
             } catch (e) {
-                msg.innerText = "Lỗi kết nối!";
+                msg.innerText = "Lỗi kết nối CSDL!";
             }
         }
     </script>
