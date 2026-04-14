@@ -2,56 +2,79 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Xác Thực Truy Cập</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Xác Thực</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 320px; }
-        input { padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; box-sizing: border-box; text-align: center; }
-        button { background: #0056b3; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
-        #msg { color: #d9534f; margin-top: 15px; font-size: 14px; min-height: 20px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); text-align: center; width: 320px; border: 1px solid #ddd; }
+        h2 { color: #1a73e8; margin-bottom: 10px; }
+        input { padding: 12px; width: 100%; margin-bottom: 20px; border: 2px solid #dfe1e5; border-radius: 8px; font-size: 16px; box-sizing: border-box; text-align: center; outline: none; }
+        input:focus { border-color: #1a73e8; }
+        button { background: #1a73e8; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #1557b0; }
+        #msg { margin-top: 15px; font-size: 14px; min-height: 20px; font-weight: 500; }
+        .loading { color: #5f6368; }
+        .error { color: #d93025; }
     </style>
 </head>
 <body>
     <script>
-        // KIỂM TRA TỰ ĐỘNG: Nếu đã từng nhập mã thành công, vào thẳng menu
+        // Nếu đã có token, bay thẳng vào menu
         if (localStorage.getItem("quiz_access_token") === "active") {
             window.location.href = "index.html";
         }
     </script>
 
     <div class="box">
-        <h2 style="color:#0056b3">HỆ THỐNG ÔN THI</h2>
-        <p style="font-size: 13px; color: #666;">Vui lòng nhập mã truy cập của bạn</p>
-        <input type="text" id="code" placeholder="Nhập mã 1 lần duy nhất...">
-        <button onclick="check()">KÍCH HOẠT & VÀO THI</button>
-        <p id="msg"></p>
+        <h2>KÍCH HOẠT</h2>
+        <p style="color: #5f6368; font-size: 13px;">Nhập mã để bắt đầu bài thi</p>
+        <input type="text" id="userCode" placeholder="Nhập mã của bạn..." autocomplete="off">
+        <button id="submitBtn" onclick="startVerify()">VÀO THI NGAY</button>
+        <div id="msg"></div>
     </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbw3hd0TQ3141b_gEpde5CfVxR6Hk1a5kqK3-gPxTiB1engmtRDq_25zSKpkvaRPXHgr/exec"
+        // DÁN LINK GOOGLE APPS SCRIPT CỦA BẠN VÀO ĐÂY
+        const SCRIPT_URL = "https://script.google.com/macros/library/d/17X8Y0ijMRy7RI3Rstw05u11lbyErqI5tFB_QzEvuuW44jAmkE1YxCs9y/1";
 
-        async function check() {
-            const code = document.getElementById('code').value.trim();
+        async function startVerify() {
+            const codeInput = document.getElementById('userCode');
+            const btn = document.getElementById('submitBtn');
             const msg = document.getElementById('msg');
-            if(!code) return msg.innerText = "Hãy nhập mã!";
-            
-            msg.style.color = "blue";
-            msg.innerText = "Đang xác thực...";
+            const code = codeInput.value.trim();
+
+            if (!code) {
+                msg.className = "error";
+                msg.innerText = "❌ Bạn chưa nhập mã!";
+                return;
+            }
+
+            // Vô hiệu hóa nút để tránh bấm nhiều lần gây glitch
+            btn.disabled = true;
+            btn.innerText = "ĐANG KIỂM TRA...";
+            msg.className = "loading";
+            msg.innerText = "Vui lòng đợi trong giây lát...";
 
             try {
-                const response = await fetch(`${API_URL}?code=${code}`);
-                const data = await response.json();
+                // Gọi tới Google Sheets
+                const response = await fetch(`${SCRIPT_URL}?code=${encodeURIComponent(code)}`);
+                const result = await response.json();
 
-                if(data.status === "success") {
-                    // GHI NHỚ VĨNH VIỄN TRÊN MÁY TÍNH NÀY
+                if (result.status === "success") {
                     localStorage.setItem("quiz_access_token", "active");
                     window.location.href = "index.html";
                 } else {
-                    msg.style.color = "red";
-                    msg.innerText = data.message;
+                    msg.className = "error";
+                    msg.innerText = "⚠️ " + result.message;
+                    btn.disabled = false;
+                    btn.innerText = "VÀO THI NGAY";
                 }
-            } catch (e) {
-                msg.innerText = "Lỗi kết nối CSDL!";
+            } catch (error) {
+                msg.className = "error";
+                msg.innerText = "🚫 Lỗi kết nối! Hãy kiểm tra link API.";
+                btn.disabled = false;
+                btn.innerText = "THỬ LẠI";
+                console.error(e);
             }
         }
     </script>
