@@ -27,21 +27,21 @@
 
     <script>
         const quizData = [
-    {q: "Câu 1: Người lao động phải chấp hành kỷ luật và nội quy đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 2: Sinh viên cần tu dưỡng đạo đức để làm công dân tốt đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 3: Công dân có quyền tham gia quản lý Nhà nước đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 4: Bày tỏ ý kiến về chính trị, xã hội là quyền tự do ngôn luận đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 5: Quyền cơ bản của công dân được Hiến pháp bảo vệ đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 6: Hoạt động tạo ra của cải vật chất là Lao động đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 7: Người lao động tốt phải yêu nghề và giữ đạo đức nghề nghiệp đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 8: Người có quốc tịch Việt Nam là công dân Việt Nam đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 9: Công dân đủ 21 tuổi có quyền ứng cử Quốc hội đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 10: Nói lao động 'chỉ để kiếm tiền cho bản thân' là sai, vì còn để phát triển đất nước đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 11: Công dân tốt là người có khả năng lao động tốt đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 12: Công nhân phải đi làm đúng giờ và chấp hành kỷ cương đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 13: Độ tuổi thấp nhất của người lao động là từ đủ 15 tuổi đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 14: Công dân VN bắt buộc phải có quốc tịch VN đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 15: Mọi công dân bình đẳng trước pháp luật về quyền và nghĩa vụ đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+    {q: "Câu 1: Người lao động có nghĩa vụ?", o: ["A. Làm việc trong điều kiện không bảo đảm an toàn.", "B. Tuân theo mọi sự phân công, điều động của cấp trên.", "C. Chấp hành kỉ luật lao động, nội quy lao động.", "D. Không được nghỉ chế độ khi đang nhiều việc."], a: 2},
+    {q: "Câu 2: Tiêu chí tu dưỡng rèn luyện để sinh viên trở thành công dân tốt?", o: ["A. Có ý thức công dân", "B. Thực hiện tốt quyền và nghĩa vụ", "C. Cả 3 đáp án trên", "D. Tu dưỡng, rèn luyện đạo đức, lối sống"], a: 2},
+    {q: "Câu 3: Công dân có quyền tham gia quản lý nhà nước và xã hội?", o: ["A. Sai", "B. Đúng"], a: 1},
+    {q: "Câu 4: Công dân bày tỏ quan điểm về chính trị, kinh tế, xã hội qua quyền nào?", o: ["A. Quyền khiếu nại.", "B. Quyền tự do ngôn luận.", "C. Quyền bầu cử, ứng cử.", "D. Quyền tố cáo."], a: 1},
+    {q: "Câu 5: Những lợi ích cơ bản mà công dân được hưởng, được Nhà nước bảo vệ theo Hiến pháp là?", o: ["A. Nghĩa vụ công dân.", "B. Các quyền con người", "C. Nghĩa vụ con người", "D. Quyền cơ bản của công dân."], a: 3},
+    {q: "Câu 6: Hoạt động có mục đích tạo ra của cải vật chất và giá trị tinh thần là?", o: ["A. Hướng nghiệp.", "B. Trải nghiệm.", "C. Lao động", "D. Dịch vụ."], a: 2},
+    {q: "Câu 7: Đặc điểm của người lao động tốt?", o: ["A. Luôn quan tâm đến lợi ích bản thân", "B. Phải có bằng cấp cao", "C. Cố mọi cách để tạo năng suất cao", "D. Có tình yêu yêu nghề, giữ gìn đạo đức nghề nghiệp"], a: 3},
+    {q: "Câu 8: Người nào được hưởng quyền và thực hiện nghĩa vụ công dân theo pháp luật VN?", o: ["A. Người có quốc tịch Việt Nam.", "B. Người đang sống tại Việt Nam.", "C. Người đã thôi quốc tịch VN.", "D. Người nước ngoài tại VN."], a: 0},
+    {q: "Câu 9: Công dân đủ 21 tuổi trở lên có quyền ứng cử vào Quốc hội, HĐND?", o: ["A. Sai", "B. Đúng"], a: 1},
+    {q: "Câu 10: Ý nào KHÔNG đúng khi nói về nghĩa vụ lao động?", o: ["A. Lao động là nghĩa vụ thiêng liêng.", "B. Lao động là nghĩa vụ đối với gia đình.", "C. Lao động chỉ để kiếm tiền thoả mãn bản thân.", "D. Lao động để góp phần phát triển đất nước."], a: 2},
+    {q: "Câu 11: Người lao động tốt?", o: ["A. Tạo hiệu suất cao", "B. Lao động trí óc", "C. Lao động chân tay", "D. Công dân tốt có khả năng lao động tốt"], a: 3},
+    {q: "Câu 12: Nghĩa vụ của người công nhân là?", o: ["A. Đi làm đúng giờ.", "B. Không đánh nhau cãi nhau.", "C. Cả A, B, C.", "D. Chấp hành kỉ cương nề nếp công ty."], a: 2},
+    {q: "Câu 13: Độ tuổi thấp nhất của người lao động là?", o: ["A. 18 tuổi.", "B. Từ đủ 18 tuổi.", "C. 15 tuổi.", "D. Từ đủ 15 tuổi."], a: 3},
+    {q: "Câu 14: Công dân nước CHXHCN Việt Nam là người có quốc tịch Việt Nam?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 15: Công dân bình đẳng về quyền và nghĩa vụ như thế nào?", o: ["A. Bình đẳng theo quy định pháp luật.", "B. Nghĩa vụ như nhau.", "C. Quyền như nhau.", "D. Quyền và nghĩa vụ giống nhau."], a: 0}
 ];
         function render() {
             let html = '';
