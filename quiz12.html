@@ -27,21 +27,21 @@
 
     <script>
         const quizData = [
-    {q: "Câu 1: Đảng ra đời chấm dứt khủng hoảng về đường lối và giai cấp lãnh đạo đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 2: Cách mạng giải phóng dân tộc phải đi theo con đường vô sản đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 3: Sức mạnh bảo vệ Tổ quốc là khối đại đoàn kết toàn dân tộc đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 4: Tiền tệ có 5 chức năng đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 5: Nguyễn Ái Quốc gửi yêu sách tới Hội nghị Vécxây (1919) đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 6: Cổ vũ hủ tục là hành vi sai trái, không phải công dân tốt đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 7: Bí quyết thành công của Đảng là giữ vững bản chất giai cấp công nhân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 8: 5/6/1911 là ngày Nguyễn Tất Thành ra đi tìm đường cứu nước đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 9: Hồ Chí Minh dùng hình tượng 'Con đỉa hai vòi' để chỉ chủ nghĩa tư bản đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 10: Một dân tộc dốt là một dân tộc yếu đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 11: Trung với nước, hiếu với dân là đạo đức cơ bản người VN đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 12: Đoàn kết dân tộc thể hiện qua lễ hội và hợp tác kinh tế đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 13: Không tôn trọng quyền người khác là sai, công dân phải tôn trọng quyền của mọi người đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 14: Tự do ngôn luận là bày tỏ quan điểm đúng nơi, đúng lúc theo pháp luật đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 15: Hội nhập quốc tế giúp khai thác các nguồn lực bên ngoài đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+    {q: "Câu 1: Người lao động tốt cần hội tụ yếu tố nào?", o: ["A. Tình yêu thương", "B. Cần – Kiệm", "C. Liêm – Chính", "D. Đức – Tài"], a: 3},
+    {q: "Câu 2: Hoàn thiện chính sách cung ứng dịch vụ công cộng thiết yếu nhằm?", o: ["A. Phát triển đất nước", "B. Đáp ứng nguyện vọng nhân dân", "C. Hội nhập quốc tế", "D. Đảm bảo công bằng và bình đẳng"], a: 1},
+    {q: "Câu 3: Đảng ra đời vĩ đại vì chấm dứt điều gì?", o: ["A. Lãnh đạo của tư sản", "B. Hội VNCM thanh niên", "C. Khủng hoảng đường lối và giai cấp lãnh đạo", "D. Lãnh đạo của phong kiến"], a: 2},
+    {q: "Câu 4: Theo HCM, cách mạng giải phóng dân tộc phải đi theo con đường nào?", o: ["A. Tư sản", "B. TBCN", "C. Ruộng đất", "D. Vô sản"], a: 3},
+    {q: "Câu 5: Sức mạnh bảo vệ Tổ quốc là?", o: ["A. Lực lượng vũ trang", "B. Đảng, dân và quân", "C. Nội lực và ngoại lực", "D. Đại đoàn kết dân tộc, cả hệ thống chính trị"], a: 3},
+    {q: "Câu 6: Nhận định: Tiền tệ có 5 chức năng. Đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 7: 18/06/1919, Nguyễn Ái Quốc gửi bản yêu sách tới hội nghị nào?", o: ["A. Tehran", "B. Pan", "C. Vécxây", "D. Yalta"], a: 2},
+    {q: "Câu 8: Cổ vũ hủ tục lạc hậu là điều kiện trở thành công dân tốt. Đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 1},
+    {q: "Câu 9: Bí quyết thành công của Đảng là gì?", o: ["A. Thực hiện dân chủ", "B. Lắng nghe dân", "C. Tiêu diệt phản động", "D. Giữ vững bản chất giai cấp công nhân"], a: 3},
+    {q: "Câu 10: Ngày 5/6/1911 đã diễn ra sự kiện gì?", o: ["A. Nguyễn Tất Thành tìm đường cứu nước", "B. VN Quang phục hội thành lập", "C. Đông Kinh nghĩa thục thành lập", "D. Kháng thuế ở Trung Kì"], a: 0},
+    {q: "Câu 11: Hình tượng 'Con đỉa hai vòi' dùng để chỉ cái gì?", o: ["A. Chủ nghĩa tư bản", "B. Chủ nghĩa đế quốc", "C. Thực dân Pháp", "D. Phong kiến"], a: 0},
+    {q: "Câu 12: Điền từ: 'Một dân tộc …. là một dân tộc …...'", o: ["A. yếu/dốt", "B. dốt/hèn", "C. yếu/hèn", "D. dốt/yếu"], a: 3},
+    {q: "Câu 13: Phẩm chất đạo đức cơ bản của con người VN thời đại mới là?", o: ["A. Trung với nước, hiếu với dân", "B. Cần, kiệm, liêm, chính", "C. Tinh thần quốc tế", "D. Tất cả đều đúng"], a: 3},
+    {q: "Câu 14: Đoàn kết các dân tộc thể hiện qua hoạt động nào?", o: ["A. Lễ hội", "B. Giáo dục", "C. Hợp tác kinh tế", "D. Tất cả phương án trên"], a: 3},
+    {q: "Câu 15: Ý nào KHÔNG đúng về quyền và nghĩa vụ công dân?", o: ["A. Không cần tôn trọng quyền người khác", "B. Được Hiến pháp bảo vệ", "C. Không bị phân biệt đối xử", "D. Bình đẳng trước pháp luật"], a: 0}
 ];
 
         function render() {
