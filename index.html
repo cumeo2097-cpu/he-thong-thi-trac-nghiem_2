@@ -1,40 +1,63 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <script>
-    if (sessionStorage.getItem("quiz_access") !== "granted") {
-        window.location.href = "login.html";
-    }
-</script>
     <meta charset="UTF-8">
-    <title>Hệ Thống Ôn Tập Trắc Nghiệm</title>
+    <title>Menu Đề Thi</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #e9ecef; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        .box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
-        .btn { display: block; background: #28a745; color: white; padding: 12px; text-decoration: none; border-radius: 5px; margin-bottom: 10px; font-weight: bold; transition: 0.3s; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-        h2 { color: #0056b3; margin-top: 0; }
-        h3 { color: #17a2b8; margin: 20px 0 10px 0; border-top: 1px solid #eee; padding-top: 15px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #e9ecef; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 450px; }
+        h2 { color: #0056b3; margin-bottom: 25px; font-size: 24px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px; }
+        .grid { display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px; }
+        .btn { display: block; background: #28a745; color: white; padding: 14px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s; border: none; font-size: 16px; }
+        .btn:hover { background: #218838; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .btn-extra { background: #17a2b8; }
+        .btn-extra:hover { background: #138496; }
+        h3 { color: #666; font-size: 16px; margin: 20px 0 10px 0; text-align: left; padding-left: 5px; }
+        .logout { margin-top: 20px; font-size: 13px; color: #999; cursor: pointer; text-decoration: underline; }
+        
+        /* Scrollbar mini */
+        .grid::-webkit-scrollbar { width: 5px; }
+        .grid::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
     </style>
+    <script>
+        // BẢO MẬT: Nếu chưa kích hoạt mã, đá văng về trang chủ
+        if (localStorage.getItem("quiz_access_token") !== "active") {
+            window.location.href = "index.html";
+        }
+    </script>
 </head>
 <body>
     <div class="box">
-        <h2>CHỌN ĐỀ ÔN TẬP</h2>
-        <a href="quiz1.html" class="btn">Ôn tập - Quiz 1</a>
-        <a href="quiz2.html" class="btn">Ôn tập - Quiz 2</a>
-        <a href="quiz3.html" class="btn">Ôn tập - Quiz 3</a>
-        <a href="quiz4.html" class="btn">Ôn tập - Quiz 4</a>
-        <a href="quiz5.html" class="btn">Ôn tập - Quiz 5</a>
-        <a href="quiz6.html" class="btn">Ôn tập - Quiz 6</a>
-        <a href="quiz7.html" class="btn">Ôn tập - Quiz 7</a>
-        <a href="quiz8.html" class="btn">Ôn tập - Quiz 8</a>
-        <a href="quiz9.html" class="btn">Ôn tập - Quiz 9</a>
+        <h2>DANH SÁCH ĐỀ THI</h2>
         
-        <h3>PHẦN BỔ SUNG</h3>
-        <a href="quiz10.html" class="btn" style="background:#17a2b8;">Bổ sung 1 (Câu 1-15)</a>
-        <a href="quiz11.html" class="btn" style="background:#17a2b8;">Bổ sung 2 (Câu 16-30)</a>
-        <a href="quiz12.html" class="btn" style="background:#17a2b8;">Bổ sung 3 (Câu 31-45)</a>
-        <a href="quiz13.html" class="btn" style="background:#17a2b8;">Bổ sung 4 (Câu 46-57)</a>
+        <div class="grid">
+            <a href="quiz1.html" class="btn">📝 Ôn tập - Quiz 1</a>
+            <a href="quiz2.html" class="btn">📝 Ôn tập - Quiz 2</a>
+            <a href="quiz3.html" class="btn">📝 Ôn tập - Quiz 3</a>
+            <a href="quiz4.html" class="btn">📝 Ôn tập - Quiz 4</a>
+            <a href="quiz5.html" class="btn">📝 Ôn tập - Quiz 5</a>
+            <a href="quiz6.html" class="btn">📝 Ôn tập - Quiz 6</a>
+            <a href="quiz7.html" class="btn">📝 Ôn tập - Quiz 7</a>
+            <a href="quiz8.html" class="btn">📝 Ôn tập - Quiz 8</a>
+            <a href="quiz9.html" class="btn">📝 Ôn tập - Quiz 9</a>
+            
+            <h3>CÂU HỎI BỔ SUNG</h3>
+            <a href="quiz10.html" class="btn btn-extra">💡 Bổ sung - Đề 10</a>
+            <a href="quiz11.html" class="btn btn-extra">💡 Bổ sung - Đề 11</a>
+            <a href="quiz12.html" class="btn btn-extra">💡 Bổ sung - Đề 12</a>
+            <a href="quiz13.html" class="btn btn-extra">💡 Bổ sung - Đề 13</a>
+        </div>
+
+        <div class="logout" onclick="logout()">Xóa dữ liệu đăng nhập (Dành cho máy công cộng)</div>
     </div>
+
+    <script>
+        function logout() {
+            if(confirm("Bạn có muốn xóa trạng thái đăng nhập trên máy này không?")) {
+                localStorage.removeItem("quiz_access_token");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
 </body>
 </html>
