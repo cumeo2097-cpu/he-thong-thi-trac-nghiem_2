@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Thực Kích Hoạt</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+        input { padding: 12px; width: 100%; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; text-align: center; font-size: 16px; }
+        button { background: #007bff; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
+        button:disabled { background: #ccc; }
+        #msg { margin-top: 15px; font-size: 14px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem("quiz_access_token") === "active") {
+            window.location.href = "menu.html";
+        }
+    </script>
+
+    <div class="box">
+        <h3>NHẬP MÃ TRUY CẬP</h3>
+        <input type="text" id="code" placeholder="Mã kích hoạt...">
+        <button id="btn" onclick="verify()">VÀO THI</button>
+        <div id="msg"></div>
+    </div>
+
+    <script>
+        // DÁN LINK GOOGLE SCRIPT MỚI CỦA BẠN VÀO ĐÂY
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbws4zW_dL1pmcCSyTFZqp1wjY5TyzzPatGMNl6H-otn44QlVQ-wnRvmCuCOOiqCeo1d/exec";
+
+        function verify() {
+            const code = document.getElementById('code').value.trim();
+            const btn = document.getElementById('btn');
+            const msg = document.getElementById('msg');
+
+            if (!code) return alert("Chưa nhập mã!");
+
+            btn.disabled = true;
+            btn.innerText = "ĐANG KIỂM TRA...";
+            msg.innerText = "";
+
+            // Sử dụng cơ chế gọi ngầm để tránh lỗi CORS Glitch
+            const finalUrl = SCRIPT_URL + "?code=" + encodeURIComponent(code);
+            
+            fetch(finalUrl, { method: 'GET', mode: 'no-cors'})
+            .then(() => {
+                // Do mode 'no-cors' không đọc được nội dung trả về, 
+                // ta sẽ dùng một mẹo nhỏ là đợi 2 giây rồi kiểm tra lại.
+                // Nhưng để chắc chắn, bạn hãy dùng Fetch bình thường với Code Apps Script mới ở trên.
+                
+                // --- PHẦN SỬA LẠI ĐỂ CHẠY CHUẨN ---
+                fetch(finalUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.status === "success") {
+                        localStorage.setItem("quiz_access_token", "active");
+                        window.location.href = "menu.html";
+                    } else {
+                        msg.style.color = "red";
+                        msg.innerText = data.message;
+                        btn.disabled = false;
+                        btn.innerText = "VÀO THI";
+                    }
+                })
+                .catch(err => {
+                    msg.innerText = "Lỗi kết nối Server!";
+                    btn.disabled = false;
+                    btn.innerText = "THỬ LẠI";
+                });
+            });
+        }
+    </script>
+</body>
+</html>
