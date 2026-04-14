@@ -27,18 +27,18 @@
 
     <script>
        const quizData = [
-    {q: "Câu 1: Đại đoàn kết dân tộc được thể chế hóa bằng các chính sách, pháp luật đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 2: Sinh viên cần rèn luyện cả đạo đức, lối sống và ý thức công dân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 3: Con người khác con vật ở chỗ con người biết Sản xuất đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 4: Đoàn kết trong dịch bệnh, thiên tai thể hiện sức mạnh dân tộc đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 5: Văn hóa có chức năng giáo dục con người đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 6: Hoàn thiện Nhà nước pháp quyền là nhiệm vụ trọng tâm của hệ thống chính trị đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 7: Nhà nước ta mang bản chất giai cấp công nhân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 8: Chống dịch COVID-19 thành công nhờ sự đồng thuận của nhân dân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 9: Giữ vững an ninh là nhiệm vụ của Đảng, Nhà nước và toàn dân đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 10: Phát triển bền vững cần sự kết hợp giữa kinh tế và bảo vệ môi trường đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 11: Quyền làm chủ của nhân dân được thực hiện qua Nhà nước đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
-    {q: "Câu 12: Hội nhập kinh tế quốc tế là xu thế tất yếu hiện nay đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0}
+    {q: "Câu 1: Hành vi nào là biểu hiện của quyền tự do ngôn luận?", o: ["A. Muốn viết gì cũng được", "B. Bày tỏ quan điểm mọi lúc", "C. Bày tỏ quan điểm xây dựng chương trình", "D. Muốn nói gì cũng được"], a: 2},
+    {q: "Câu 2: Thách thức khi mở rộng hợp tác quốc tế?", o: ["A. Dịch bệnh, tội phạm", "B. Sức ép cạnh tranh", "C. Biến động thị trường", "D. Tất cả đều đúng"], a: 3},
+    {q: "Câu 3: Đường lối đoàn kết dân tộc hiện nay thể hiện như thế nào?", o: ["A. Tăng hoạt động kinh tế", "B. Thể chế hoá bằng pháp luật", "C. Mở rộng quan hệ quốc tế", "D. Thể chế hóa bằng các chính sách, pháp luật"], a: 3},
+    {q: "Câu 4: Tiêu chí tu dưỡng rèn luyện để sinh viên thành công dân tốt?", o: ["A. Thực hiện quyền và nghĩa vụ", "B. Tu dưỡng đạo đức", "C. Có ý thức công dân", "D. Cả 3 đáp án trên"], a: 3},
+    {q: "Câu 5: Con người khác loài vật ở chỗ nào?", o: ["A. Sản xuất/ Ăngghen", "B. Lao động/ Mác", "C. Tư duy/ Lênin", "D. Sáng tạo/ Ăngghen"], a: 0},
+    {q: "Câu 6: Điều gì thể hiện rõ nhất sức mạnh đoàn kết hiện nay?", o: ["A. Phát triển kinh tế", "B. Tham gia các hoạt động xã hội", "C. Sự lãnh đạo của Đảng", "D. Đoàn kết phòng chống thiên tai, dịch bệnh"], a: 3},
+    {q: "Câu 7: Chức năng giáo dục văn hoá thể hiện qua tư tưởng, hành động? Đúng hay sai?", o: ["A. Đúng", "B. Sai"], a: 0},
+    {q: "Câu 8: Nhiệm vụ trọng tâm của đổi mới hệ thống chính trị là?", o: ["A. Ưu tiên", "B. Trước mắt", "C. Quan trọng", "D. Hoàn thiện nhà nước pháp quyền"], a: 3},
+    {q: "Câu 9: Tiền tệ có mấy chức năng?", o: ["A. 5", "B. 4", "C. 3", "D. 2"], a: 0},
+    {q: "Câu 10: Bản chất nhà nước ta thể hiện qua giai cấp nào?", o: ["A. Nông dân", "B. Công nhân", "C. Bị trị", "D. Thống trị"], a: 1},
+    {q: "Câu 11: Sức mạnh đoàn kết chống COVID-19 phát huy nhờ đâu?", o: ["A. Huy động hệ thống chính trị", "B. Đồng thuận của dân", "C. Phòng chống quy mô lớn", "D. Tất cả các phương án trên"], a: 3},
+    {q: "Câu 12: Điền từ: 'Tăng cường quốc phòng... là nhiệm vụ trọng yếu của ……. '", o: ["A. Hệ thống chính trị", "B. Mọi tầng lớp", "C. Đảng, nhà nước và toàn dân", "D. Nhà nước và toàn dân"], a: 2}
 ];
         function render() {
             let html = '';
