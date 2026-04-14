@@ -3,74 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác Thực Kích Hoạt</title>
+    <title>Xác Thực Truy Cập</title>
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; width: 300px; }
-        input { padding: 12px; width: 100%; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; text-align: center; font-size: 16px; }
-        button { background: #007bff; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
-        button:disabled { background: #ccc; }
-        #msg { margin-top: 15px; font-size: 14px; font-weight: bold; }
+        body { font-family: Arial, sans-serif; background: #e9ecef; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 320px; }
+        h2 { color: #0056b3; margin-bottom: 20px; }
+        input { padding: 12px; width: 100%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; box-sizing: border-box; text-align: center; }
+        button { background: #0056b3; color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        #msg { margin-top: 15px; font-size: 14px; font-weight: bold; min-height: 20px; }
     </style>
 </head>
 <body>
     <script>
+        // TỰ ĐỘNG VÀO MENU NẾU ĐÃ KÍCH HOẠT TRƯỚC ĐÓ
         if (localStorage.getItem("quiz_access_token") === "active") {
             window.location.href = "menu.html";
         }
     </script>
 
     <div class="box">
-        <h3>NHẬP MÃ TRUY CẬP</h3>
-        <input type="text" id="code" placeholder="Mã kích hoạt...">
-        <button id="btn" onclick="verify()">VÀO THI</button>
-        <div id="msg"></div>
+        <h2>KÍCH HOẠT</h2>
+        <p style="font-size: 13px; color: #666;">Mã chỉ có hiệu lực cho 01 lần nhập</p>
+        <input type="text" id="codeField" placeholder="Nhập mã truy cập...">
+        <button id="submitBtn" onclick="handleCheck()">VÀO THI NGAY</button>
+        <p id="msg"></p>
     </div>
 
     <script>
-        // DÁN LINK GOOGLE SCRIPT MỚI CỦA BẠN VÀO ĐÂY
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbws4zW_dL1pmcCSyTFZqp1wjY5TyzzPatGMNl6H-otn44QlVQ-wnRvmCuCOOiqCeo1d/exec";
+        // --- QUAN TRỌNG: DÁN LINK WEB APP MỚI NHẤT CỦA BẠN VÀO ĐÂY ---
+        const API_URL = "https://script.google.com/macros/s/AKfycbxwewuQm_5Yd7nASEVc7a04TueXtN26Bl-jB5_Ezlbq6-0kpZe8zLE_j6XXljaIaaDo/exec";
 
-        function verify() {
-            const code = document.getElementById('code').value.trim();
-            const btn = document.getElementById('btn');
+        async function handleCheck() {
+            const input = document.getElementById('codeField');
+            const btn = document.getElementById('submitBtn');
             const msg = document.getElementById('msg');
-
-            if (!code) return alert("Chưa nhập mã!");
-
-            btn.disabled = true;
-            btn.innerText = "ĐANG KIỂM TRA...";
-            msg.innerText = "";
-
-            // Sử dụng cơ chế gọi ngầm để tránh lỗi CORS Glitch
-            const finalUrl = SCRIPT_URL + "?code=" + encodeURIComponent(code);
+            const code = input.value.trim();
             
-            fetch(finalUrl, { method: 'GET', mode: 'no-cors'})
-            .then(() => {
-                // Do mode 'no-cors' không đọc được nội dung trả về, 
-                // ta sẽ dùng một mẹo nhỏ là đợi 2 giây rồi kiểm tra lại.
-                // Nhưng để chắc chắn, bạn hãy dùng Fetch bình thường với Code Apps Script mới ở trên.
+            if(!code) {
+                msg.style.color = "red";
+                msg.innerText = "⚠️ Bạn chưa nhập mã!";
+                return;
+            }
+            
+            // Khóa nút để tránh bấm nhiều lần
+            btn.disabled = true;
+            btn.innerText = "ĐANG XÁC THỰC...";
+            msg.style.color = "blue";
+            msg.innerText = "Vui lòng chờ giây lát...";
+
+            try {
+                // Thêm tham số t=Date.now() để ép trình duyệt gọi dữ liệu mới nhất, không lấy cache cũ
+                const finalUrl = API_URL + "?code=" + encodeURIComponent(code) + "&t=" + Date.now();
                 
-                // --- PHẦN SỬA LẠI ĐỂ CHẠY CHUẨN ---
-                fetch(finalUrl)
-                .then(res => res.json())
-                .then(data => {
-                    if(data.status === "success") {
-                        localStorage.setItem("quiz_access_token", "active");
-                        window.location.href = "menu.html";
-                    } else {
-                        msg.style.color = "red";
-                        msg.innerText = data.message;
-                        btn.disabled = false;
-                        btn.innerText = "VÀO THI";
-                    }
-                })
-                .catch(err => {
-                    msg.innerText = "Lỗi kết nối Server!";
+                const response = await fetch(finalUrl);
+                const data = await response.json();
+
+                if(data.status === "success") {
+                    localStorage.setItem("quiz_access_token", "active");
+                    window.location.href = "menu.html";
+                } else {
+                    msg.style.color = "red";
+                    msg.innerText = "❌ " + data.message;
                     btn.disabled = false;
-                    btn.innerText = "THỬ LẠI";
-                });
-            });
+                    btn.innerText = "VÀO THI NGAY";
+                }
+            } catch (e) {
+                msg.style.color = "red";
+                msg.innerText = "🚫 Lỗi kết nối server!";
+                btn.disabled = false;
+                btn.innerText = "THỬ LẠI";
+            }
         }
     </script>
 </body>
